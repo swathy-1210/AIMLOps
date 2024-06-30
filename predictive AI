@@ -1,0 +1,193 @@
+Types of algorithm to be used
+
+Linear 
+Tree
+Neural 
+
+
+DecisionTree for classification and regression
+Trainer decision tree is used for Predictive AI
+
+
+Root Node
+training set - data set
+
+
+How does a DT classify a new data point?
+
+Same concept as Decision Tree dtaa structure
+
+WHich feature to be chosen and from what threashold - is selected by the algorithm
+Gini(economics terminology) - measure impurity at a node - only for classification
+    1- sum (k 1-n) P^2 i,k --- k is number of classes
+    Gini of 0 - one class in that node
+    Gini of 1 - all classes are present in that node
+Calculating gini = probability of class in each node = Probaboility of first class and first node + ....
+
+Sample attribute is the number of training comes in root node -- all conditions
+In our example classes - setosa , versicolor, virginica
+
+
+Sum of entries will be equal to values in each node
+
+probability at a particular node = values / samples
+During training we fed the samples and the decision tree trains the model with each class, and in production - inference time a new data comes, the same is used to put to a selected class
+
+Entropy and cross entropy - is a complex method than gini to find impurity
+
+
+Feature Space -- petal length and petal width (plot in the graph and show one class)
+Decision boundary - draw a perpendicular to mark between classes (orthogonal / perpendicular to the axis to do this - decision tree can do this) 
+Neural can place angular, circular in graph
+
+Linear - can only out one slanded line for decision boundary
+Simplest data set
+
+
+Decision tree is used for a complex data - where combinations of conditions are there
+It divides the data set into classes to make it simple
+it can fit the training data set in 100 % cases
+Since it goes to all levels ,in lowest level it will have overfitting
+Max depth = 2 , controls the structure of tree. - restrict the model to 2 levels 
+Max depth is a Hyper parameter. 
+
+
+CART Training Algorithm
+
+Dataset is split based on a single feature and threashold
+Question :  which feature and what threshold
+Brute force method / exhaustive search - is used to find the feature
+feature , threshold - trial and error 
+find split for all possible cases of features and threshold = and find the one which has lowest Gini and entropy
+
+
+Example with exhaustive:
+
+Have threshold from 0 -8 (and can start from 0.1 to 8.0 - 80 options)
+Put all 150 dataset 149 + 149 = 298 
+Find the mid points 
+Split is performed - Gleft and Gright
+weighted J (optimisation measure for drawing decision boundary) 1- mleft/m *Gleft + 1-mright/m * Gright - calculate this for all possible threshold values 
+Every node will only think about its child node alone, but not children of child - greedy algorithm
+Since it just check its child alone - there is a change that grand children can have a lesser J for a threshold. Which would be ommitted.
+
+Decision Tree Cons :
+
+Only Orthogonal 
+Only consideres immediate child
+
+Decision tree with XGboost - best combo
+
+ID3 - can split with 3 (not used)
+
+
+
+Confusion matrix
+
+GT - ground truth in each node
+TP - true positive
+FP - false positive
+Matrix with GT and Classes
+
+false positive and false negative has to be omitted 
+Recall (Sensitivity in statistics)- Among ground truth positives, how many the model is saying is positive
+REcall = TP/(TP+FN)
+EG : recall should be 1, reducing false negavites, fraud, cancer detection
+Eg : false positives should be reduced 
+Precision - among classifier how many tru positives - true positive rate
+Precision = TP/(TP+FP)
+
+F1 Score  - Harmonic mean of recall and precision
+
+False Negative rate = FN/(TP+FN)
+Specificity = TN/(FP+TN)
+
+False positive rate = FP/FP+TN
+
+
+
+Evaluation Metrics - Regression
+
+Root Mean Square Error
+Mean Absolute Error
+Relative Errors
+R^2 = 1 - MSE/Variance 
+
+Development set and Test set
+
+m rows and n columns (150  sets , 4 features adn 1 target)
+Split into dev and test set (80-20 rule)
+Here : 120 in development set , 30 in test set (stratified sampling - all classes avialble in both)
+
+Removed from environment and kept as hold out test - should not used for improving model
+Development of AI model 2 parts = 
+    Find the parameters of the model (growing the tree - training the model)
+    Setting Max depth of tree - hyper param
+    Choice of hyper parameter 
+    Tuning of hyper param - K fold Cross validation 
+
+Testing :
+
+Developed model against a totally unseen data  - evaluating an expected real world performance
+
+
+
+Regularization 
+
+Decision Tree how many splits will happen - no predefined number of params. Non parametric models
+DT can overfit any complex data
+HYper Paramters 
+max_depth
+min_sample_split
+min_sample_leaf
+max_features : pick only features with more cardinality (should not happen - we need to control)
+
+
+Degress of freedom of model - overfit. They can place decsion boundary in any complicated data
+Any hyper parameter which regulates a Model ability  to overfit  --Regularization
+
+
+
+
+
+K-fold cross validation
+
+From dev ste (120) - divide into 5 folds
+One training of decision tree - create validation fold and train fold  
+F1 score on validation fold and call it as Performance 1. This is first Decision Tree
+5 Decision Tree model would be create . Each uses a different validation and train fold. 
+Training set is different folds from Devlopment set
+Ideally the model trained in all different folds - should be identical or closer each other. f1 scores should be more or less equal. That mean model has not overfit
+
+If f1 scores are different - overfit
+
+Mean of the performance - bias
+Variance of performance - variance of error -- overfitting
+changing hyper params will help to recude variance
+High variance - model is over sensitive to data 
+choice that hyper param combination for which bias and variance is low
+
+
+GridSearch Cross validation  - hyper parameter selection
+
+This procedure is in concept - Statistical learning theory
+
+we have for set of hyper parameters - we have that many models
+Among this, we have to deploy one model in production
+Or deploy all 10 and take ensemble inference - increases cost of inference
+Ideal - do training using -----test set---- and check F1 score
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
